@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 
 class Game :
     def __init__(self, name):
@@ -21,3 +21,5 @@ class Game :
                 if event.type == pygame.QUIT:
                     running = False
         pygame.quit()
+        sys.exit()
+        
