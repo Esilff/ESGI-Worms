@@ -1,0 +1,89 @@
+import abc
+import pygame
+
+class Weapon(abc.ABC):
+    def __init__(self, x, y, angle, power, radius, color, wind=0, gravity=0):
+        # Position de l'arme
+        self.x = x
+        self.y = y
+
+        # Angle et puissance de tir de l'arme
+        self.angle = angle
+        self.power = power
+
+        # Rayon et couleur de la balle de l'arme
+        self.radius = radius
+        self.color = color
+
+        # Vent et gravité affectant la balle
+        self.wind = wind
+        self.gravity = gravity
+
+        # Calculer la vitesse initiale de la balle en fonction de l'angle, de la puissance de tir et du vent
+        self.speed_x = power * math.cos(math.radians(angle)) + wind
+        self.speed_y = power * math.sin(math.radians(angle))
+
+    @abc.abstractmethod
+    def shoot(self):
+        pass
+
+    def calculate_trajectory(self, time):
+        # Calculer la position de la balle en fonction du temps en utilisant la vitesse initiale et la gravité
+        x = self.x + self.speed_x * time
+        y = self.y + self.speed_y * time + 0.5 * self.gravity * time ** 2
+        return (x, y)
+
+class Grenade(Weapon):
+    def __init__(self, x, y, angle, power, radius, color, wind=0, gravity=0, bounciness=0.5):
+        super().__init__(x, y, angle, power, radius, color, wind, gravity)
+
+        # Rebond de la grenade
+        self.bounciness = bounciness
+
+    def shoot(self):
+        # Créer une grenade et la lancer avec la vitesse initiale calculée précédemment
+        grenade = Grenade(self.x, self.y, self.radius, self.color, self.speed_x, self.speed_y, self.gravity, self.bounciness)
+        return grenade
+
+class Rocket(Weapon):
+    def __init__(self, x, y, angle, power, radius, color, wind=0, gravity=0, explosion_radius=50):
+        super().__init__(x, y, angle, power, radius, color, wind, gravity)
+
+        # Rayon de l'explosion de la roquette
+        self.explosion_radius = explosion_radius
+
+    def shoot(self):
+        # Créer une roquette et la lancer avec la vitesse initiale calculée précédemment
+        rocket = Rocket(self.x, self.y, self.radius, self.color, self.speed_x, self.speed_y, self.gravity, self.explosion_radius)
+        return rocket
+
+class Ball:
+    def __init__(self, x, y, radius, color, speed_x, speed_y, gravity, bounciness=None, explosion_radius=None):
+        # Position, rayon et couleur de la balle
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self.color = color
+
+        # Vitesse et gravité de la balle
+        self.speed_x = speed_x
+        self.speed_y = speed_y
+        self.gravity = gravity
+
+        # Rebond et rayon d'explosion de la balle (uniquement pour les grenades et les roquettes)
+        self.bounciness = bounciness
+        self.explosion_radius = explosion_radius
+
+        # Créer un rectangle de collision pour la balle
+        self.rect = pygame.Rect(x, y, radius, radius)
+
+    def update(self):
+        # Mettre à jour la vitesse de la balle en fonction de la gravité
+        self.speed_y += self.gravity
+
+        # Mettre à jour la position de la balle en fonction de sa vitesse
+        self.x += self.speed_x
+        self.y += self.speed_y
+
+        # Mettre à jour le rectangle de collision de la balle
+        self.rect = pygame.Rect

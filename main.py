@@ -1,11 +1,4 @@
-import src.game.game as Game
-import pygame
+from src.game.game import Game
 
 
-
-game = Game.Game("Window")
-
-def drawRedCircle():
-    pygame.draw.circle(game.screen, (255, 0, 0), (320, 240), 50)
-
-game.loop_func = drawRedCircle()
+game = Game("Window")

@@ -1,9 +1,17 @@
 import pygame, sys
+#import entity class
+from ..core.entity import Entity
+
+entity = Entity(0,0)
+
+def gameLoop(screen):
+    entity.mesh.draw(screen, entity.transform.position)
 
 class Game :
     def __init__(self, name):
         self.name = name
-        self.loop_func = None
+
+        
         self.init()
         self.loop()
 
@@ -15,10 +23,12 @@ class Game :
     def loop(self):
         self.running = True
         while self.running:
-            self.screen.fill((0, 0, 0))
-            if self.loop_func :
-                self.loop_func
-            pygame.display.flip()
+            self.screen.fill((0, 0, 0)) #erase everything on screen
+
+            gameLoop(self.screen)
+            entity.transform.position.y += 0.01
+
+            pygame.display.flip() #show the new content from instructions
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
