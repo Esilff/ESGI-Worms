@@ -1,14 +1,17 @@
 import pygame, sys
 # import entity class
 from ..core.entity import Entity
+from..core.collider import Collider
 import time
 
 entity = Entity(0, 0)
+collider = Collider(-10,500,200,20)
 
 
 def gameLoop(screen):
-    entity.update()
+    entity.update(collider)
     entity.mesh.draw(screen, entity.transform.position)
+    collider.debugDraw(screen)
 
 
 class Game:
