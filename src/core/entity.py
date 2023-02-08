@@ -1,17 +1,15 @@
 # import the transform class
 from .transform import Transform
+from .physics import Physics
 from .render.mesh import Mesh
 
+
 class Entity:
-    def __init__(self, x,y):
-        self.transform = Transform(x,y)
-        self.mesh = Mesh(32, (255,255,255))
+    def __init__(self, x, y):
+        self.transform = Transform(x, y)
+        self.physics = Physics()
+        self.mesh = Mesh(32, (255, 255, 255))
 
     def update(self):
-        pass
-
-    def applyGravity(self):
-        self.transform.position.y += 0.01
-
-
-    
+        self.physics.update()
+        self.transform.position = self.physics.position
