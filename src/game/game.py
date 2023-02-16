@@ -3,6 +3,7 @@ import pygame, sys
 from ..core.entity import Entity
 from..core.collider import Collider
 from ..core.eventHandlers.Keyboard import Keyboard
+from ..core.vector import Vector
 
 entity = Entity(0, 0)
 collider = Collider(-10,500,200,20)
@@ -10,10 +11,10 @@ collider = Collider(-10,500,200,20)
 
 def gameLoop(screen, dt):
 
-    if Keyboard().get_key_down(pygame.K_s):
-        entity.mesh.set_color((0,255,255))
-    if Keyboard().get_key_down(pygame.K_z):
-        entity.mesh.set_color((255,255,0))
+    if (Keyboard().get_key_down(pygame.K_q)):
+        entity.physics.add_force(Vector(-4,0))
+    if (Keyboard().get_key_down(pygame.K_d)):
+        entity.physics.add_force(Vector(4,0))
     entity.update(collider, dt)
     entity.mesh.draw(screen, entity.transform.position)
     collider.debugDraw(screen)

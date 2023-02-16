@@ -13,4 +13,5 @@ class Entity:
     def update(self, collider, dt):
         self.physics.update(collider, dt)
         self.transform.position = self.physics.position
+        print(f"Velocity : {self.physics.velocity.x} ; {self.physics.velocity.y}")
 
