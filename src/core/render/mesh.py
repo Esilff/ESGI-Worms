@@ -7,3 +7,6 @@ class Mesh:
 
     def draw(self, screen, position):
         pygame.draw.rect(screen, self.color, (position.x, position.y, self.size, self.size))
+
+    def set_color(self, color):
+        self.color = color

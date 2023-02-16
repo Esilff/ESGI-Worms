@@ -10,6 +10,7 @@ class Entity:
         self.physics = Physics()
         self.mesh = Mesh(32, (255, 255, 255))
 
-    def update(self, collider):
-        self.physics.update(collider)
+    def update(self, collider, dt):
+        self.physics.update(collider, dt)
         self.transform.position = self.physics.position
+
